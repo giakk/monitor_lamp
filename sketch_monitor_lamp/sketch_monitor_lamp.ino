@@ -21,7 +21,7 @@
 #define LEDC_RESOLUTION LEDC_TIMER_12_BIT
 #define LEDC_START_DUTY  (0)
 #define LEDC_TARGET_DUTY (4095)
-#define FADE_TIME_MS   (3000)
+#define FADE_TIME_MS   (1000)
 
 // UART LD2410C settings
 #define TX_PIN 4
@@ -81,6 +81,9 @@ void setup() {
   };
   ledc_channel_config(&channel_conf);
 
+  // Installa il servizio fade LEDC (chiamare UNA SOLA VOLTA nel setup!)
+  ledc_fade_func_install(0);
+
   // LD2410 Initialization
   radarSerial.begin(LD2410_BAUD_RATE, SERIAL_8N1, RX_PIN, TX_PIN);
   if (radar.begin()) {
@@ -119,103 +122,74 @@ void setup() {
   // //radar.requestBToff();
   // radar.configMode(false);
   // delay(500);
-
-  // // ── Autothreshold ────────────────────────────────────────────
-  // if (AUTO_THRESHOLD) {
-  //   Serial.printf("\nAutothreshold attivo — hai %d secondi per uscire dalla stanza!\n", AUTO_THRESHOLD_TIMEOUT_S);
-  //   radar.configMode(true);
-    
-  //   if (radar.autoThresholds(AUTO_THRESHOLD_TIMEOUT_S)) {
-  //     Serial.println("Autothreshold avviato, attendo completamento...");
-  //     radar.configMode(false);
-
-  //     // Aspetta finché non termina (successo o fallimento)
-  //     unsigned long startTime = millis();
-  //     unsigned long timeout = (AUTO_THRESHOLD_TIMEOUT_S + 35) * 1000UL; // timeout di sicurezza
-
-  //     while (millis() - startTime < timeout) {
-  //       radar.check();
-  //       AutoStatus status = radar.getAutoStatus();
-
-  //       if (status == AutoStatus::COMPLETED) {
-  //         Serial.println("Autothreshold completato con successo!");
-  //         break;
-  //       } else if (status == AutoStatus::NOT_IN_PROGRESS) {
-  //         Serial.println("Autothreshold fallito o non avviato.");
-  //         break;
-  //       }
-
-  //       delay(500);
-  //     }
-
-  //     const MyLD2410::ValuesArray& mov = radar.getMovingThresholds();
-  //     Serial.println("Moving thresholds:");
-  //     for (byte i = 0; i <= mov.N; i++) {
-  //       Serial.printf("  Gate %d: %d\n", i, mov.values[i]);
-  //     }
-
-  //     const MyLD2410::ValuesArray& sta = radar.getStationaryThresholds();
-  //     Serial.println("Stationary thresholds:");
-  //     for (byte i = 0; i <= sta.N; i++) {
-  //       Serial.printf("  Gate %d: %d\n", i, sta.values[i]);
-  //     }
-
-  //   } else {
-  //     radar.configMode(false);
-  //     Serial.println("Autothreshold: command not accepted (sensor firmware >= 2.44 required)");
-  //   }
-  // }
 }
 
-void loop() {
 
+
+
+void loop() {
   float lux = 0;
 
   if (radar.check() == MyLD2410::Response::DATA) {
-
     if (light.readLux(lux)) {
-      Serial.print("Ambient light: ");
       lux = int(lux);
-      Serial.print(lux);
 
       bool presence = radar.presenceDetected();
-      Serial.print(" | Presenza: ");
-      Serial.print(presence ? "SI | " : "NOooooooooooooooo | ");
-      Serial.printf("Distanza: %lu cm | ", radar.detectedDistance());
 
-      int pwm = presence ? sqrtFunction(lux) : 0;
+      // Serial.print("Ambient light: ");
+      // Serial.print(lux);
+      // Serial.print(" | Presenza: ");
+      // Serial.print(presence ? "SI | " : "NOooooooooooooooo | ");
+      // Serial.printf("Distanza: %lu cm\n", radar.detectedDistance());
 
-      targetDuty = (uint32_t) pwm;
-      if (currentDuty > targetDuty) {currentDuty -= fadeStep;}
-      if (currentDuty < targetDuty) {currentDuty += fadeStep;}
-      
-      if (currentDuty < 0) currentDuty = 0;
-      if (currentDuty > 1023) currentDuty = 1023;
+      uint32_t pwm_target = uint32_t(presence ? sqrtFunction(lux) : 0);
+      uint32_t current_duty = ledc_get_duty(LEDC_MODE, LEDC_CHANNEL);
 
-      if (ledc_get_duty(LEDC_MODE, LEDC_CHANNEL) != currentDuty) {
-        ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, currentDuty);
-        ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
+      // Isteresi: riavvia il fade solo se la differenza è significativa
+      const uint32_t HYSTERESIS = 50;
+      if (abs((int)current_duty - (int)pwm_target) > HYSTERESIS) {
+
+        // Velocità proporzionale: fade_ms è proporzionale alla distanza da percorrere
+        uint32_t delta = abs((int)pwm_target - (int)current_duty);
+        uint32_t fade_ms = map(delta, 0, (1 << LEDC_TIMER_12_BIT) - 1, 0, FADE_TIME_MS);
+
+        ledc_fade_func_uninstall();
+        ledc_fade_func_install(0);
+
+        ledc_set_fade_with_time(LEDC_MODE, LEDC_CHANNEL, pwm_target, fade_ms);
+        ledc_fade_start(LEDC_MODE, LEDC_CHANNEL, LEDC_FADE_NO_WAIT);
       }
-
-      Serial.printf("PWM duty: %d/1023 -- %d\n", currentDuty, targetDuty);
 
     } else {
       Serial.println("Failed to read lux");
     }
   }
-
-  delay(REFRESH_RATE);
 }
 
-int parabolicFunction(float lux) {
-  double a = 1.0 / 1600.0;
-  return (int)(a * lux * lux);
-}
+int luxToDuty(float lux, float lux_max = 500.0f, float gamma = 2.2f) {
+  const int max_duty = (1 << LEDC_TIMER_12_BIT) - 1;
 
-int line(float lux) {
-  return (int)(0.25f * lux);
+  // 1. Normalizza lux in [0.0, 1.0]
+  float normalized = constrain(lux / lux_max, 0.0f, 1.0f);
+
+  // 2. Gamma correction: più lux c'è, MENO luce vogliamo dal LED
+  //    Invertiamo: con tanta luce ambientale il LED si abbassa
+  float inverted = 1.0f - normalized;
+
+  // 3. Applica gamma (percettivamente lineare)
+  float corrected = pow(inverted, gamma);
+
+  return (int)(corrected * max_duty);
 }
 
 int sqrtFunction(float lux) {
-  return (int)(sqrt(lux / 150) * 1023);
+  // Clamp: lux oltre 150 supererebbe 4095
+
+  const int max_duty = (1 << LEDC_TIMER_12_BIT) - 1; // = 4095
+
+  if (lux >= 400.0f) return max_duty;
+  if (lux <= 0.0f)   return 0;
+  int val = (int)(sqrt(lux / 400.0f) * max_duty);
+  // Sicurezza extra
+  return constrain(val, 0, max_duty);
 }
