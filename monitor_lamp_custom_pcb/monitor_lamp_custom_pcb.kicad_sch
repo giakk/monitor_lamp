@@ -2391,6 +2391,27 @@
 		)
 		(uuid "ed42307e-46dc-4342-a03a-e1aba27785c9")
 	)
+	(text_box "NOTE: all this components have to stay in a pcb of specific dimensions 50 mm x 35 mm"
+		(exclude_from_sim yes)
+		(at 247.65 151.13 0)
+		(size 33.02 11.43)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type solid)
+		)
+		(fill
+			(type none)
+		)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.1588)
+			)
+			(justify left top)
+		)
+		(uuid "9b0c2377-74ad-4417-9fa0-0b1f91e65df2")
+	)
 	(junction
 		(at 114.3 158.75)
 		(diameter 0)
@@ -3701,7 +3722,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_USB:USB_C_Receptacle_GCT_USB4125-xx-x_6P_TopMnt_Horizontal"
 			(at 36.83 43.18 0)
 			(hide yes)
 			(show_name no)
