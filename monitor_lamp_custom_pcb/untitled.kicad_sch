@@ -1941,16 +1941,6 @@
 	)
 	(wire
 		(pts
-			(xy 157.48 53.34) (xy 177.8 53.34)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4894ffd4-4d38-40e5-bbee-87b5c7bccf0f")
-	)
-	(wire
-		(pts
 			(xy 185.42 140.97) (xy 185.42 142.24)
 		)
 		(stroke
@@ -2239,6 +2229,16 @@
 		)
 		(uuid "f39d2bc4-3543-4be2-bb3c-13a7d7fa2c5a")
 	)
+	(wire
+		(pts
+			(xy 115.57 43.18) (xy 121.92 43.18)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fca21741-953f-4820-aee6-48970a167e73")
+	)
 	(label "SDA"
 		(at 115.57 53.34 0)
 		(effects
@@ -2301,17 +2301,17 @@
 	)
 	(global_label "PWM_Control"
 		(shape input)
-		(at 177.8 53.34 0)
+		(at 115.57 43.18 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
 		(uuid "9697fcd1-14ac-45a9-8d25-965938650c91")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 192.8197 53.34 0)
+			(at 100.5503 43.18 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2319,7 +2319,7 @@
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 			)
 		)
 	)
