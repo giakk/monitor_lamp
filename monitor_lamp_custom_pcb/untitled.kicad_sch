@@ -1852,7 +1852,7 @@
 	)
 	(wire
 		(pts
-			(xy 220.98 45.72) (xy 228.6 45.72)
+			(xy 215.9 45.72) (xy 228.6 45.72)
 		)
 		(stroke
 			(width 0)
@@ -1902,7 +1902,7 @@
 	)
 	(wire
 		(pts
-			(xy 220.98 74.93) (xy 228.6 74.93)
+			(xy 215.9 74.93) (xy 228.6 74.93)
 		)
 		(stroke
 			(width 0)
@@ -2250,8 +2250,18 @@
 		)
 		(uuid "8f6052b3-5946-48db-9673-7e9d77e952ee")
 	)
-	(label "+5V"
-		(at 220.98 74.93 0)
+	(label "5V_Protected"
+		(at 97.79 66.04 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "92e7d0ea-7007-40e1-a2c2-d6b5aba1ee20")
+	)
+	(label "5V_Protected"
+		(at 215.9 74.93 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2260,8 +2270,8 @@
 		)
 		(uuid "ebbefc9e-b975-456c-8ade-0169a9df34a3")
 	)
-	(label "+5V"
-		(at 220.98 45.72 0)
+	(label "5V_Protected"
+		(at 215.9 45.72 0)
 		(effects
 			(font
 				(size 1.27 1.27)
