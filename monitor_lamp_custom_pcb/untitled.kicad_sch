@@ -1359,8 +1359,9 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Transistor_FET:IRLZ44N"
+		(symbol "Transistor_FET:AO3400A"
 			(pin_names
+				(offset 0)
 				(hide yes)
 			)
 			(exclude_from_sim no)
@@ -1379,7 +1380,7 @@
 					(justify left)
 				)
 			)
-			(property "Value" "IRLZ44N"
+			(property "Value" "AO3400A"
 				(at 5.08 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1390,7 +1391,7 @@
 					(justify left)
 				)
 			)
-			(property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical"
+			(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
 				(at 5.08 -1.905 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1403,7 +1404,7 @@
 					(justify left)
 				)
 			)
-			(property "Datasheet" "http://www.irf.com/product-info/datasheets/data/irlz44n.pdf"
+			(property "Datasheet" "http://www.aosmd.com/pdfs/datasheet/AO3400A.pdf"
 				(at 5.08 -3.81 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1415,7 +1416,7 @@
 					(justify left)
 				)
 			)
-			(property "Description" "47A Id, 55V Vds, 22mOhm Rds Single N-Channel HEXFET Power MOSFET, TO-220AB"
+			(property "Description" "30V Vds, 5.7A Id, N-Channel MOSFET, SOT-23"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1426,7 +1427,7 @@
 					)
 				)
 			)
-			(property "ki_keywords" "N-Channel HEXFET MOSFET Logic-Level"
+			(property "ki_keywords" "N-Channel MOSFET"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1437,7 +1438,7 @@
 					)
 				)
 			)
-			(property "ki_fp_filters" "TO?220*"
+			(property "ki_fp_filters" "SOT?23*"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1448,7 +1449,7 @@
 					)
 				)
 			)
-			(symbol "IRLZ44N_0_1"
+			(symbol "AO3400A_0_1"
 				(polyline
 					(pts
 						(xy 0.254 1.905) (xy 0.254 -1.905)
@@ -1592,7 +1593,7 @@
 				)
 				(polyline
 					(pts
-						(xy 2.794 0.508) (xy 2.921 0.381) (xy 3.683 0.381) (xy 3.81 0.254)
+						(xy 2.921 0.381) (xy 3.683 0.381)
 					)
 					(stroke
 						(width 0)
@@ -1615,7 +1616,7 @@
 					)
 				)
 			)
-			(symbol "IRLZ44N_1_1"
+			(symbol "AO3400A_1_1"
 				(pin input line
 					(at -5.08 0 0)
 					(length 2.54)
@@ -1635,9 +1636,9 @@
 					)
 				)
 				(pin passive line
-					(at 2.54 5.08 270)
+					(at 2.54 -5.08 90)
 					(length 2.54)
-					(name "D"
+					(name "S"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1653,9 +1654,9 @@
 					)
 				)
 				(pin passive line
-					(at 2.54 -5.08 90)
+					(at 2.54 5.08 270)
 					(length 2.54)
-					(name "S"
+					(name "D"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1790,6 +1791,12 @@
 		)
 	)
 	(junction
+		(at 185.42 132.08)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "4e021fc6-82c2-47ef-ad80-bbc80ee9edcd")
+	)
+	(junction
 		(at 124.46 132.08)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1802,16 +1809,10 @@
 		(uuid "989ae072-4a40-4856-8c7c-bbb159a9301d")
 	)
 	(junction
-		(at 185.42 142.24)
+		(at 185.42 124.46)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "aa8c2b08-c984-4dc1-901a-59178d5dd23c")
-	)
-	(junction
-		(at 185.42 132.08)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "cfde8e49-5bab-42bf-8871-593cd1af7b7b")
+		(uuid "c573935a-03b5-4d64-9cb2-9e116a521b10")
 	)
 	(junction
 		(at 143.51 116.84)
@@ -1901,16 +1902,6 @@
 	)
 	(wire
 		(pts
-			(xy 185.42 132.08) (xy 204.47 132.08)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3d0aeee9-b7a3-48c5-93cf-d3fb5bc1d6ed")
-	)
-	(wire
-		(pts
 			(xy 220.98 74.93) (xy 228.6 74.93)
 		)
 		(stroke
@@ -1941,13 +1932,23 @@
 	)
 	(wire
 		(pts
-			(xy 185.42 140.97) (xy 185.42 142.24)
+			(xy 176.53 124.46) (xy 185.42 124.46)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "5044bc31-52cd-427c-acb7-f9a7c41b3554")
+		(uuid "5aa26082-a476-4ac8-a100-079e8238b686")
+	)
+	(wire
+		(pts
+			(xy 185.42 132.08) (xy 204.47 132.08)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5cb63a7e-b1c1-493c-bd77-b64dc4dc7596")
 	)
 	(wire
 		(pts
@@ -1988,16 +1989,6 @@
 			(type default)
 		)
 		(uuid "6c69f779-8644-4d6a-bfca-736627c4ea2b")
-	)
-	(wire
-		(pts
-			(xy 185.42 142.24) (xy 198.12 142.24)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "748ab4c4-0759-490e-8ecb-acd4725085c0")
 	)
 	(wire
 		(pts
@@ -2081,23 +2072,13 @@
 	)
 	(wire
 		(pts
-			(xy 185.42 132.08) (xy 185.42 133.35)
+			(xy 204.47 129.54) (xy 200.66 129.54)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "a9b470c5-0fb2-4ea2-a5dd-1c889acd8dce")
-	)
-	(wire
-		(pts
-			(xy 198.12 134.62) (xy 204.47 134.62)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ab2882bd-3bb5-4306-b51c-fe8eb1bd5fcd")
+		(uuid "a00ba108-f818-45ed-be4c-33c61234fad9")
 	)
 	(wire
 		(pts
@@ -2151,6 +2132,26 @@
 	)
 	(wire
 		(pts
+			(xy 200.66 129.54) (xy 200.66 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d030f867-47fa-4fe5-b4c6-ec91097cb402")
+	)
+	(wire
+		(pts
+			(xy 200.66 124.46) (xy 185.42 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d25d84bf-31d2-4636-8ca9-c8196665b992")
+	)
+	(wire
+		(pts
 			(xy 43.18 132.08) (xy 124.46 132.08)
 		)
 		(stroke
@@ -2158,26 +2159,6 @@
 			(type default)
 		)
 		(uuid "dad341d5-6897-43b2-b377-74adc5f9b73f")
-	)
-	(wire
-		(pts
-			(xy 198.12 142.24) (xy 198.12 134.62)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "db00ca0a-ddfd-4b6f-a18b-d09d44684df9")
-	)
-	(wire
-		(pts
-			(xy 176.53 142.24) (xy 185.42 142.24)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "de22fa20-911b-459b-83fb-949a608ccb88")
 	)
 	(wire
 		(pts
@@ -2360,7 +2341,7 @@
 	)
 	(hierarchical_label "+12V_Input"
 		(shape input)
-		(at 176.53 142.24 180)
+		(at 176.53 124.46 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2624,92 +2605,6 @@
 			(project "monitor_lamp_custom_pcb"
 				(path "/77ed2f8f-6c9e-49d8-b473-d071fcc9ba2f/0d662d48-a846-4d52-8851-1394daa2469c"
 					(reference "R6")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Transistor_FET:IRLZ44N")
-		(at 143.51 129.54 270)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "5e33a998-b916-4be5-a025-4b8d25c94bfc")
-		(property "Reference" "Q2"
-			(at 143.51 135.89 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "IRLZ44N"
-			(at 143.51 138.43 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_THT:TO-220-3_Vertical"
-			(at 141.605 134.62 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(justify left)
-			)
-		)
-		(property "Datasheet" "http://www.irf.com/product-info/datasheets/data/irlz44n.pdf"
-			(at 139.7 134.62 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Description" "47A Id, 55V Vds, 22mOhm Rds Single N-Channel HEXFET Power MOSFET, TO-220AB"
-			(at 143.51 129.54 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "2"
-			(uuid "a4516308-cc7e-45f9-8a24-2686fad4c137")
-		)
-		(pin "1"
-			(uuid "1a0ccb48-cf13-497b-ac5d-bf339e9a15f8")
-		)
-		(pin "3"
-			(uuid "f7fcc17a-82f6-4ae2-908e-3343a0da27b8")
-		)
-		(instances
-			(project "monitor_lamp_custom_pcb"
-				(path "/77ed2f8f-6c9e-49d8-b473-d071fcc9ba2f/0d662d48-a846-4d52-8851-1394daa2469c"
-					(reference "Q2")
 					(unit 1)
 				)
 			)
@@ -3473,8 +3368,94 @@
 		)
 	)
 	(symbol
+		(lib_id "Transistor_FET:AO3400A")
+		(at 143.51 129.54 90)
+		(mirror x)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "d7ed2102-7e58-4fa2-a15f-a80a8735058e")
+		(property "Reference" "Q3"
+			(at 143.51 135.89 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "AO3400A"
+			(at 143.51 138.43 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+			(at 145.415 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(justify left)
+			)
+		)
+		(property "Datasheet" "http://www.aosmd.com/pdfs/datasheet/AO3400A.pdf"
+			(at 147.32 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Description" "30V Vds, 5.7A Id, N-Channel MOSFET, SOT-23"
+			(at 143.51 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "3"
+			(uuid "0dcace06-a047-407d-a006-6fd89ce8d225")
+		)
+		(pin "2"
+			(uuid "15830937-bced-4cd9-b211-d1c06e2f9044")
+		)
+		(pin "1"
+			(uuid "3bb955d6-5e8f-4dfe-a846-34ff2a08ae14")
+		)
+		(instances
+			(project "monitor_lamp_custom_pcb"
+				(path "/77ed2f8f-6c9e-49d8-b473-d071fcc9ba2f/0d662d48-a846-4d52-8851-1394daa2469c"
+					(reference "Q3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Connector_Generic:Conn_01x02")
-		(at 209.55 132.08 0)
+		(at 209.55 129.54 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -3485,7 +3466,7 @@
 		(fields_autoplaced yes)
 		(uuid "e01e1e7d-1494-495e-9960-8eea2ef22a06")
 		(property "Reference" "J4"
-			(at 212.09 132.0799 0)
+			(at 212.09 129.5399 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3496,7 +3477,7 @@
 			)
 		)
 		(property "Value" "Conn_01x02"
-			(at 212.09 134.6199 0)
+			(at 212.09 132.0799 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3507,7 +3488,7 @@
 			)
 		)
 		(property "Footprint" "TerminalBlock:TerminalBlock_Xinya_XY308-2.54-2P_1x02_P2.54mm_Horizontal"
-			(at 209.55 132.08 0)
+			(at 209.55 129.54 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3518,7 +3499,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 209.55 132.08 0)
+			(at 209.55 129.54 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3529,7 +3510,7 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 209.55 132.08 0)
+			(at 209.55 129.54 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3556,7 +3537,7 @@
 	)
 	(symbol
 		(lib_id "Diode:1N5819WS")
-		(at 185.42 137.16 90)
+		(at 185.42 128.27 270)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -3567,29 +3548,29 @@
 		(fields_autoplaced yes)
 		(uuid "eaeb68ef-e18d-422d-affc-25e9a7f863ae")
 		(property "Reference" "D1"
-			(at 187.96 136.2074 90)
+			(at 187.96 126.6824 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify right)
+				(justify left)
 			)
 		)
 		(property "Value" "1N5819WS"
-			(at 187.96 138.7474 90)
+			(at 187.96 129.2224 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify right)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Diode_SMD:D_SOD-323"
-			(at 189.865 137.16 0)
+			(at 180.975 128.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3600,7 +3581,7 @@
 			)
 		)
 		(property "Datasheet" "https://datasheet.lcsc.com/lcsc/2204281430_Guangdong-Hottech-1N5819WS_C191023.pdf"
-			(at 185.42 137.16 0)
+			(at 185.42 128.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3611,7 +3592,7 @@
 			)
 		)
 		(property "Description" "40V 600mV@1A 1A SOD-323 Schottky Barrier Diodes, SOD-323"
-			(at 185.42 137.16 0)
+			(at 185.42 128.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
