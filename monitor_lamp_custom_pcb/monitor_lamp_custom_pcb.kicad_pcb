@@ -9856,8 +9856,8 @@
 			(justify left bottom)
 		)
 	)
-	(gr_text "ESP32-C3"
-		(at 150.8 73.8 90)
+	(gr_text "ESP32-C3\nSupermini"
+		(at 152 72.8 90)
 		(layer "F.SilkS")
 		(uuid "51bef0aa-6eff-4a91-b20b-e05a8bf08d85")
 		(effects
