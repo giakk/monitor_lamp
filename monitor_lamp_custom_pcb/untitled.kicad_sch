@@ -1307,7 +1307,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Diode:1N5819WS"
+		(symbol "Diode:SS34"
 			(pin_numbers
 				(hide yes)
 			)
@@ -1330,7 +1330,7 @@
 					)
 				)
 			)
-			(property "Value" "1N5819WS"
+			(property "Value" "SS34"
 				(at 0 -2.54 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1340,7 +1340,7 @@
 					)
 				)
 			)
-			(property "Footprint" "Diode_SMD:D_SOD-323"
+			(property "Footprint" "Diode_SMD:D_SMA"
 				(at 0 -4.445 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1351,7 +1351,7 @@
 					)
 				)
 			)
-			(property "Datasheet" "https://datasheet.lcsc.com/lcsc/2204281430_Guangdong-Hottech-1N5819WS_C191023.pdf"
+			(property "Datasheet" "https://www.vishay.com/docs/88751/ss32.pdf"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1362,7 +1362,7 @@
 					)
 				)
 			)
-			(property "Description" "40V 600mV@1A 1A SOD-323 Schottky Barrier Diodes, SOD-323"
+			(property "Description" "40V 3A Schottky Diode, SMA"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1384,7 +1384,7 @@
 					)
 				)
 			)
-			(property "ki_fp_filters" "D*SOD?323*"
+			(property "ki_fp_filters" "D*SMA*"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -1395,7 +1395,7 @@
 					)
 				)
 			)
-			(symbol "1N5819WS_0_1"
+			(symbol "SS34_0_1"
 				(polyline
 					(pts
 						(xy -1.905 0.635) (xy -1.905 1.27) (xy -1.27 1.27) (xy -1.27 -1.27) (xy -0.635 -1.27) (xy -0.635 -0.635)
@@ -1433,7 +1433,7 @@
 					)
 				)
 			)
-			(symbol "1N5819WS_1_1"
+			(symbol "SS34_1_1"
 				(pin passive line
 					(at -3.81 0 0)
 					(length 2.54)
@@ -2392,16 +2392,22 @@
 		)
 	)
 	(junction
+		(at 191.77 132.08)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "199d5e6e-fd29-4959-bf09-2d68767765d1")
+	)
+	(junction
 		(at 224.79 53.34)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "2c7a8215-473c-4e75-84e5-78781668d1a3")
 	)
 	(junction
-		(at 185.42 132.08)
+		(at 191.77 124.46)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "4e021fc6-82c2-47ef-ad80-bbc80ee9edcd")
+		(uuid "6b52ea14-1006-4df0-b17a-16509f9140ca")
 	)
 	(junction
 		(at 124.46 132.08)
@@ -2414,12 +2420,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "989ae072-4a40-4856-8c7c-bbb159a9301d")
-	)
-	(junction
-		(at 185.42 124.46)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "c573935a-03b5-4d64-9cb2-9e116a521b10")
 	)
 	(junction
 		(at 143.51 116.84)
@@ -2645,23 +2645,13 @@
 	)
 	(wire
 		(pts
-			(xy 176.53 124.46) (xy 185.42 124.46)
+			(xy 176.53 124.46) (xy 191.77 124.46)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "5aa26082-a476-4ac8-a100-079e8238b686")
-	)
-	(wire
-		(pts
-			(xy 185.42 132.08) (xy 204.47 132.08)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5cb63a7e-b1c1-493c-bd77-b64dc4dc7596")
 	)
 	(wire
 		(pts
@@ -2725,6 +2715,16 @@
 	)
 	(wire
 		(pts
+			(xy 191.77 124.46) (xy 200.66 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "743f970b-e0ce-45ee-950a-c8324e0b694b")
+	)
+	(wire
+		(pts
 			(xy 96.52 54.61) (xy 96.52 63.5)
 		)
 		(stroke
@@ -2775,13 +2775,23 @@
 	)
 	(wire
 		(pts
-			(xy 148.59 132.08) (xy 185.42 132.08)
+			(xy 148.59 132.08) (xy 191.77 132.08)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "7dce43a5-06a4-42ab-a89a-d83c7c574e63")
+	)
+	(wire
+		(pts
+			(xy 191.77 132.08) (xy 204.47 132.08)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "832317bc-7ea7-4660-8c4a-c9283c50e669")
 	)
 	(wire
 		(pts
@@ -2972,16 +2982,6 @@
 			(type default)
 		)
 		(uuid "d030f867-47fa-4fe5-b4c6-ec91097cb402")
-	)
-	(wire
-		(pts
-			(xy 200.66 124.46) (xy 185.42 124.46)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d25d84bf-31d2-4636-8ca9-c8196665b992")
 	)
 	(wire
 		(pts
@@ -4702,6 +4702,99 @@
 		)
 	)
 	(symbol
+		(lib_id "Diode:SS34")
+		(at 191.77 128.27 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b3fbe0cd-62a5-47a8-9fa8-0e63b067f8e8")
+		(property "Reference" "D1"
+			(at 194.31 126.6824 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "SS34"
+			(at 194.31 129.2224 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SMA"
+			(at 187.325 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.vishay.com/docs/88751/ss32.pdf"
+			(at 191.77 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "40V 3A Schottky Diode, SMA"
+			(at 191.77 128.27 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C8678"
+			(at 191.77 128.27 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "faff010b-70b0-4a12-ae17-c6e1bfd90e7f")
+		)
+		(pin "2"
+			(uuid "970a0c10-3edc-46a9-a936-8a1785df5f71")
+		)
+		(instances
+			(project "monitor_lamp_custom_pcb"
+				(path "/77ed2f8f-6c9e-49d8-b473-d071fcc9ba2f/0d662d48-a846-4d52-8851-1394daa2469c"
+					(reference "D1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 48.26 177.8 0)
 		(unit 1)
@@ -4942,88 +5035,6 @@
 			(project "monitor_lamp_custom_pcb"
 				(path "/77ed2f8f-6c9e-49d8-b473-d071fcc9ba2f/0d662d48-a846-4d52-8851-1394daa2469c"
 					(reference "J4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Diode:1N5819WS")
-		(at 185.42 128.27 270)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "eaeb68ef-e18d-422d-affc-25e9a7f863ae")
-		(property "Reference" "D1"
-			(at 187.96 126.6824 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "1N5819WS"
-			(at 187.96 129.2224 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Diode_SMD:D_SOD-323"
-			(at 180.975 128.27 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://datasheet.lcsc.com/lcsc/2204281430_Guangdong-Hottech-1N5819WS_C191023.pdf"
-			(at 185.42 128.27 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "40V 600mV@1A 1A SOD-323 Schottky Barrier Diodes, SOD-323"
-			(at 185.42 128.27 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "6059dca5-76e3-476b-ba87-6374dd6fe88d")
-		)
-		(pin "2"
-			(uuid "443c321b-6204-49de-88ff-f8335e97be28")
-		)
-		(instances
-			(project "monitor_lamp_custom_pcb"
-				(path "/77ed2f8f-6c9e-49d8-b473-d071fcc9ba2f/0d662d48-a846-4d52-8851-1394daa2469c"
-					(reference "D1")
 					(unit 1)
 				)
 			)
