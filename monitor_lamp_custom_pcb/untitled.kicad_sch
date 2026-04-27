@@ -3703,6 +3703,17 @@
 				)
 			)
 		)
+		(property "LCSC" "C15127"
+			(at 83.82 68.58 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "67deb036-e453-4319-af9d-8c20cdcdb784")
 		)
