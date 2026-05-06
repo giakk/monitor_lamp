@@ -93,10 +93,10 @@
 			(layerselection 0x00000000_00000000_55555555_5755f5ff)
 			(plot_on_all_layers_selection 0x00000000_00000000_00000000_00000000)
 			(disableapertmacros no)
-			(usegerberextensions no)
+			(usegerberextensions yes)
 			(usegerberattributes yes)
 			(usegerberadvancedattributes yes)
-			(creategerberjobfile yes)
+			(creategerberjobfile no)
 			(dashed_line_dash_ratio 12)
 			(dashed_line_gap_ratio 3)
 			(svgprecision 4)
@@ -121,30 +121,30 @@
 			(subtractmaskfromsilk no)
 			(outputformat 1)
 			(mirror no)
-			(drillshape 1)
+			(drillshape 0)
 			(scaleselection 1)
-			(outputdirectory "")
+			(outputdirectory "gerber/")
 		)
 	)
-	(footprint "Custom_Components:SON50P300X300X80-11N-D"
+	(footprint "Custom_Components:DFN-10L"
 		(layer "F.Cu")
 		(uuid "0ee930b8-4951-4ccb-b8c6-3e4d8a8fffb0")
 		(at 120.225 62.5 180)
 		(descr "HUSB238")
 		(tags "Integrated Circuit")
 		(property "Reference" "IC1"
-			(at -2.875 1.3 90)
+			(at 0 0 180)
 			(layer "F.SilkS")
 			(uuid "064f3b89-ec80-4a38-8fdc-2316708977f6")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 1.27 1.27)
+					(thickness 0.254)
 				)
 			)
 		)
 		(property "Value" "HUSB238"
-			(at 0 0 0)
+			(at 0 0 180)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "0e4be56a-b284-4f1f-b203-cc999dc7cee8")
@@ -156,7 +156,7 @@
 			)
 		)
 		(property "Datasheet" "https://en.hynetek.com/uploadfiles/site/219/news/4459b599-ce6b-4d92-83cc-13212cca0672.pdf"
-			(at 0 0 0)
+			(at 0 0 180)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "3acfd1ba-09d3-420b-a3cc-f521ffe56534")
@@ -167,7 +167,7 @@
 			)
 		)
 		(property "Description" "USB Type-C Power Delivery Sink"
-			(at 0 0 0)
+			(at 0 0 180)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "bba1470f-1317-42b9-8d41-5d7536457755")
@@ -182,7 +182,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "9fae66cd-b3fe-4623-a5aa-aa5e48b5e2b5")
+			(uuid "27bbe2b8-f1b0-4fdc-98aa-fee5a9361405")
 			(effects
 				(font
 					(size 1 1)
@@ -195,7 +195,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "d0fb772c-0cc6-4717-a1b9-4a4bd53bc75d")
+			(uuid "8c96ec86-775f-46f4-a16d-45d1f180e511")
 			(effects
 				(font
 					(size 1 1)
@@ -208,7 +208,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "a77decaa-4370-412e-ad60-47cbafadb8ba")
+			(uuid "93c88f0c-4ead-48a8-86f7-b9b66f64c0a4")
 			(effects
 				(font
 					(size 1 1)
@@ -221,7 +221,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "7b7031b6-4987-4485-b834-2abe32001872")
+			(uuid "c8670ff3-a37b-4942-87f3-a77a9da9269b")
 			(effects
 				(font
 					(size 1 1)
@@ -234,7 +234,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "b8862e91-c4c2-4ce4-8bfc-7573bfd6ee8f")
+			(uuid "798d7930-eddb-4b97-971f-b3551ce293a1")
 			(effects
 				(font
 					(size 1 1)
@@ -247,7 +247,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "9a87b564-5947-48b2-93b3-4b50f1e96eca")
+			(uuid "8def546e-bef1-4ce4-9d31-09a2f83262c9")
 			(effects
 				(font
 					(size 1 1)
@@ -260,7 +260,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "5a2779bf-4d83-4eba-ad68-6c6ed79d102c")
+			(uuid "7aa57514-5881-4271-ad41-19db4a5ae865")
 			(effects
 				(font
 					(size 1 1)
@@ -273,7 +273,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "ec1e728b-3945-4d94-99e0-22c6821c4fc2")
+			(uuid "5db5ea58-271d-4460-b242-83347ce3831b")
 			(effects
 				(font
 					(size 1 1)
@@ -394,7 +394,7 @@
 			(uuid "fecfe414-560a-4f69-908c-7fc08b55782c")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 0)
+			(at 0 0 180)
 			(layer "F.Fab")
 			(uuid "7078e7b3-ea65-4202-8357-cd17d7ead629")
 			(effects
@@ -7968,6 +7968,19 @@
 			(justify left bottom)
 		)
 	)
+	(gr_text "By Giakk"
+		(at 117.9 86.3 0)
+		(layer "F.SilkS")
+		(uuid "17d6a92e-2000-44ca-b42b-1c78431f078b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.2)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+	)
 	(gr_text "ESP32-C3\nSupermini"
 		(at 152 72.8 90)
 		(layer "F.SilkS")
@@ -8643,6 +8656,15 @@
 		(free yes)
 		(net "GND")
 		(uuid "61d73c10-1695-4a0c-b010-eb267098fd37")
+	)
+	(via
+		(at 130 54.7)
+		(size 0.6)
+		(drill 0.3)
+		(layers "F.Cu" "B.Cu")
+		(free yes)
+		(net "GND")
+		(uuid "6c0854a9-28bf-414d-a526-2adce7576152")
 	)
 	(via
 		(at 160.5 54.6)
