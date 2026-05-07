@@ -2304,7 +2304,7 @@
 	)
 	(text "DA VERIFICARE CHE IL COLLEGAMENTO DEI PIN SIA CORRETTO\n"
 		(exclude_from_sim no)
-		(at 143.764 132.08 0)
+		(at 143.764 141.478 0)
 		(effects
 			(font
 				(size 1.27 1.27)

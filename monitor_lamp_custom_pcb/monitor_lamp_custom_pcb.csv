@@ -6,7 +6,7 @@
 "D1","SS34","Diode_SMD:D_SMA","C8678"
 "D2","SS14","Diode_SMD:D_SMA","C2480"
 "IC1","HUSB238","Custom_Components:DFN-10L","C7471904"
-"J1","USB_C_Receptacle_PowerOnly_6P","Connector_USB:USB_C_Receptacle_GCT_USB4125-xx-x_6P_TopMnt_Horizontal","C2894893"
+"J1","USB_C_Receptacle_PowerOnly_6P","Connector_USB:USB_C_Receptacle_GCT_USB4125-xx-x_6P_TopMnt_Horizontal","C283540"
 "J5","Conn_01x01","Connector_Wire:SolderWirePad_1x01_SMD_2x4mm",""
 "J7","Conn_01x01","Connector_Wire:SolderWirePad_1x01_SMD_2x4mm",""
 "J8","Conn_01x01","Connector_Wire:SolderWirePad_1x01_SMD_2x4mm",""
