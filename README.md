@@ -1,10 +1,9 @@
-# Smart Monitor Light Bar (ESP32-C3)
+# Monitor Light Bar
 
 ## Overview
 I wanted a smart monitor bar without spending hundreds of euros for something like the BenQ monitor lamp, so I tried to DIY it. Everithing runs on an ESP32-C3 microcontroller, a bit overkill but it will be useful for future upgrade. To control the led, the ESP32 rely on two sensors: a VELM7700 luminosity sensor to dynamically adjusts the leds brightness to maintain optimal lighting conditions, and a LD2410 presense sensor to automatically activates when a user sits.
 
 ## 3D Design
-*(Insert your 3D design description here. You can describe the assembly process, the housing for the electronics, and how the clip or gravity mount is designed to fit your monitor.)*
 
 ## Electronics
 The system is powered by a 12V input managed via a USB-C Power Delivery (PD) controller, which negotiate with the power supply to ensures 12V for the leds strips. A Mini360 step-down converter reduces this voltage to 5V to power the ESP32-C3 and the sensors, while a dedicated 1.25A fuse protects the entire circuit. The light engine consists of a 12V LED strip driven by an IRLZ44N MOSFET, which allows for precise PWM dimming controlled by the ESP32.
@@ -13,10 +12,10 @@ The "intelligence" of the hardware relies on two main modules: an LD2410 presenc
 
 > **Prototype Gallery**
 > ![Protoboard Front View](images/proto_front.jpeg)
-> **
+> *Front*
 >
 > ![Protoboard Wiring](images/proto_wiring.jpeg)
-> **
+> *Back*
 
 I also included the Kicad project of the custom pcb board I implemented. Yeah, it is overkill but why no? I wanted to learn to use Kicad and develop my first PCB. Currently I'm waiting for it to arrive and test it. 
 
