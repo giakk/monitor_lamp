@@ -10,12 +10,8 @@ The system is powered by a 12V input managed via a USB-C Power Delivery (PD) con
 
 The "intelligence" of the hardware relies on two main modules: an LD2410 presence sensor connected via UART and a VEML7700 ambient light sensor communicating through the I2C protocol. The current prototype, as shown in the images below was built on a protoboard to validate the schematic (see Prototype_board_schematic.pdf) before moving to the custom PCB currently being tested.
 
-> **Prototype Gallery**
-> ![Protoboard Front View](images/proto_front.jpeg)
-> *Front*
->
-> ![Protoboard Wiring](images/proto_wiring.jpeg)
-> *Back*
+| ![Front](images/proto_front.jpeg) | ![Back](images/proto_wiring.jpeg) |
+|:---:|:---:|
 
 I also included the Kicad project of the custom pcb board I implemented. Yeah, it is overkill but why no? I wanted to learn to use Kicad and develop my first PCB. Currently I'm waiting for it to arrive and test it. 
 
