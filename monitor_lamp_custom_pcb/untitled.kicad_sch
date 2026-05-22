@@ -2302,16 +2302,6 @@
 			(embedded_fonts no)
 		)
 	)
-	(text "DA VERIFICARE CHE IL COLLEGAMENTO DEI PIN SIA CORRETTO\n"
-		(exclude_from_sim no)
-		(at 143.764 141.478 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "1d2ea019-fbf0-4e38-a161-27ccec33444a")
-	)
 	(junction
 		(at 191.77 132.08)
 		(diameter 0)
