@@ -1,0 +1,114 @@
+(footprint "L_Sumida_CD75"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 -4.75 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "add1c9f7-93ac-4bd1-87eb-7f0021d2acc6")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "L_Sumida_CD75"
+		(at 0 5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "9da68331-bc99-42ee-a44d-e92ddfbf43ab")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" "http://mouser.it/datasheet/3/265/1/CD75.pdf"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "adb8cbdb-9621-462e-86ba-a795ac9e8a4b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" " L×W×H: 8.1×7.3×5.5mm Max."
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "5a83dd92-6e8d-4545-8164-551d6c32aefb")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_line
+		(start -4.5 -4)
+		(end 4.5 -4)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "70f584ce-9e47-480e-90ff-120aaaa5b54b")
+	)
+	(fp_line
+		(start -4.5 4)
+		(end 4.5 4)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "f44707e1-09f4-40a3-8acc-199559f49bbc")
+	)
+	(fp_circle
+		(center 0 0)
+		(end 3.9 0)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "f15ff552-bc8d-432d-a8c5-e972efd69c87")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 6.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "5ad32f38-691a-4187-a979-4072dfa1fe84")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at -2.75 0)
+		(size 3.5 7.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "e0490fd5-e3fd-4035-a1c1-c9f07be1a973")
+	)
+	(pad "2" smd rect
+		(at 2.75 0)
+		(size 3.5 7.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "591d88cc-db32-4f22-8f5d-29bcb16f7cee")
+	)
+	(embedded_fonts no)
+)
