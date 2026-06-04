@@ -5114,7 +5114,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Wire:SolderWirePad_1x01_SMD_2x4mm"
+		(property "Footprint" "Connector_Wire:SolderWirePad_1x01_SMD_1.5x3mm"
 			(at 63.5 158.75 0)
 			(hide yes)
 			(show_name no)
@@ -5923,7 +5923,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_Wire:SolderWirePad_1x01_SMD_2x4mm"
+		(property "Footprint" "Connector_Wire:SolderWirePad_1x01_SMD_1.5x3mm"
 			(at 63.5 149.86 0)
 			(hide yes)
 			(show_name no)
