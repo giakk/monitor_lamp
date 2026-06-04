@@ -1,8 +1,7 @@
 #include "7Semi_VEML7700.h"
 #include "driver/ledc.h"
 #include "MyLD2410.h"
-#include "esp_err.h"
-#include "esp_log.h" // For ESP_LOGx
+#include "esp32-hal-ledc.h"
 
 
 // I2C settings
@@ -38,15 +37,9 @@ VEML7700_7Semi light;
 
 HardwareSerial radarSerial(1); // UART1
 MyLD2410 radar(radarSerial);
-uint32_t currentDuty = 0;
-uint32_t targetDuty = 0; 
-uint32_t fadeStep = 10;
 
-bool fade_ended = false;  // status of LED fade
-bool fade_in = true;
+float lux = 0;
 
-int parabolicFunction(float lux);
-int line(float lux);
 int sqrtFunction(float lux);
 
 void setup() {
@@ -81,7 +74,7 @@ void setup() {
   };
   ledc_channel_config(&channel_conf);
 
-  // Installa il servizio fade LEDC (chiamare UNA SOLA VOLTA nel setup!)
+  // Install fade service
   ledc_fade_func_install(0);
 
   // LD2410 Initialization
@@ -128,7 +121,8 @@ void setup() {
 
 
 void loop() {
-  float lux = 0;
+
+  lux = 0;
 
   if (radar.check() == MyLD2410::Response::DATA) {
     if (light.readLux(lux)) {
@@ -166,6 +160,8 @@ void loop() {
   }
 }
 
+
+// Not in use!
 int luxToDuty(float lux, float lux_max = 500.0f, float gamma = 2.2f) {
   const int max_duty = (1 << LEDC_TIMER_12_BIT) - 1;
 
@@ -183,13 +179,12 @@ int luxToDuty(float lux, float lux_max = 500.0f, float gamma = 2.2f) {
 }
 
 int sqrtFunction(float lux) {
-  // Clamp: lux oltre 150 supererebbe 4095
 
   const int max_duty = (1 << LEDC_TIMER_12_BIT) - 1; // = 4095
 
   if (lux >= 400.0f) return max_duty;
   if (lux <= 0.0f)   return 0;
   int val = (int)(sqrt(lux / 400.0f) * max_duty);
-  // Sicurezza extra
+
   return constrain(val, 0, max_duty);
 }
