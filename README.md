@@ -1,6 +1,6 @@
 # Monitor Light Bar
 
-![Overview](images/IMG_2384.JPEG)
+![overview](images/IMG_2384.JPEG)      
 
 ## Overview
 I wanted a smart monitor bar without spending hundreds of euros for something like the BenQ monitor lamp, so I tried to DIY it. Everithing runs on an ESP32-C3 microcontroller, a bit overkill but it will be useful for future upgrade. To control the led, the ESP32 rely on two sensors: a VELM7700 luminosity sensor to dynamically adjusts the leds brightness to maintain optimal lighting conditions, and a LD2410 presense sensor to automatically activates when a user sits.
@@ -21,3 +21,5 @@ The board has been tested and corrected due to two mistakes I made in the eletri
 ## Code
 The firmware is developed within the Arduino framework and utilizes a non-blocking logic to monitor environmental changes in real-time. The core functionality revolves around an adaptive dimming algorithm: the system reads the ambient lux levels via the VEML7700 and applies a square root function to calculate the ideal LED duty cycle. This function actually work like the luminosity on the phone, so it increase if the lux of the room are high, while decrease if there is not light in the room. Maybe it is counterintuitive but it works for me. Change it as you want. 
 To prevent annoying flickering or constant micro-adjustments, the code implements a hysteresis logic, only triggering a brightness transition if the change in light is significant. Furthermore, the integration with the LD2410 mmWave radar allows the lamp to manage power efficiently, executing smooth fade-in and fade-out transitions whenever a user enters or leaves the desk area, ensuring the light is only active when actually needed.
+    
+I am working on a version of the software which expose a web page to interact with the light in real time. In the meantime, I uploaded the version of the sketch that actually works the best, with is the `sketch_monitor_lamp_working.ino`
