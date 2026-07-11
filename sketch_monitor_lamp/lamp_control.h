@@ -8,6 +8,7 @@ enum class LampMode {
   MANUAL   // duty fisso impostato dall'utente
 };
 
+
 void lamp_init();
 void lamp_update(const SensorData& data);
 
@@ -21,3 +22,6 @@ void lamp_set_brightness(uint8_t percent);
 uint8_t lamp_get_brightness();
 
 uint32_t lamp_get_duty();
+
+uint32_t percent_to_duty(uint8_t pct);
+int sqrtFunction(float lux);

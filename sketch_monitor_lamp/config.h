@@ -10,8 +10,8 @@
 #define I2C_SCL_PIN 9
 
 // ── PWM (LED strip) ───────────────────────────────────────────────────────────
-#define LEDC_GPIO       2
-#define LEDC_FREQ_HZ    19000
+#define LEDC_GPIO       21
+#define LEDC_FREQ_HZ    5000
 #define LEDC_RESOLUTION LEDC_TIMER_12_BIT
 #define LEDC_MAX_DUTY   ((1 << LEDC_RESOLUTION) - 1)
 

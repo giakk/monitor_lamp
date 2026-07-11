@@ -14,7 +14,11 @@ void sensors_init(){
     }
 
     // VEML7700 Initialization
-    light.begin(I2C_ADDRESS, Wire, I2C_CLOCK, I2C_SDA_PIN, I2C_SCL_PIN);
+    if(light.begin(I2C_ADDRESS, Wire, I2C_CLOCK, I2C_SDA_PIN, I2C_SCL_PIN)){
+        Serial.println("[sensors] VEML7700 initialized"); //DEBUG
+    } else {
+        Serial.println("[sensors] VEML7700 not responding"); //DEBUG
+    }
 
     // VEML7700 Configuration
     light.setGain(VEML7700_GAIN_2);
@@ -22,18 +26,23 @@ void sensors_init(){
     light.setPowerMode(VEML7700_PSM_MODE2, true);
 }
 
-sensors_data sensors_read(){
+SensorData sensors_read(){
 
-    sensors_data d = {};
+    SensorData d = {};
 
-    if (radar.check() == MyLD2410::Response::DATA){
+    d.radar_ok = (radar.check() == MyLD2410::Response::DATA);
+    if (d.radar_ok){
         d.presence = radar.presenceDetected();
         d.distance_cm = radar.detectedDistance();
     }
 
-    if (light.readLux(d.lux)){
+    d.lux_ok = light.readLux(d.lux);
+    if (d.lux_ok){
         d.lux = (float)(int)d.lux;
     }
+
+    //Serial.printf("[LD2410] Presence: %d | Distance: %lu [VEML7700] Lux: %f \n", d.presence, d.distance_cm, d.lux);
+
 
     return d;
 

@@ -2,39 +2,35 @@
 
 static bool lamp_is_on = true;
 static LampMode lamp_mode = LampMode::AUTO;
-static ConfigVariables& cfg;
+static const AppConfig* cfg = nullptr;
 static uint8_t s_brightness = 100;
-
 
 void lamp_init(){
     ledcAttach(LEDC_GPIO, LEDC_FREQ_HZ, LEDC_RESOLUTION);
     ledcWrite(LEDC_GPIO, 0);
-    cfg = config_get();
+    cfg = &config_get();
 }
 
 void lamp_update(const SensorData& data){
 
     uint32_t current_duty = ledcRead(LEDC_GPIO);
+    uint32_t pwm_target;
 
-    if(!lamp_is_on || !data.presence){
-        ledcFade(LEDC_GPIO, current_duty, 0, cfg.fade_time_ms);
-        return;
+    if (!lamp_is_on || !data.presence) {
+        pwm_target = 0;
+    } else if (lamp_mode == LampMode::MANUAL) {
+        pwm_target = percent_to_duty(s_brightness);
+    } else {
+        pwm_target = 0;
+        if (data.radar_ok && data.lux_ok) {
+            pwm_target = data.presence ? uint32_t(sqrtFunction(data.lux)) : 0;
+        }
     }
 
-    if(lamp_mode == LampMode::MANUAL){
-        // Convert percentage (0% : 100%) into PWM (0 : 2^bitResolution-1)
-        percent_to_duty(s_brightness)
-    }else{
-        // Compute PWM based on Lux read by the sensor VEML7700
-        uint32_t pwm_target = uint32_t(sqrtFunction(lux));
-
-        if (abs((int)current_duty - (int)pwm_target) > cfg.pwm_hysteresis) {
-
-            uint32_t delta = abs((int)pwm_target - (int)current_duty);
-            uint32_t fade_ms = map(delta, 0, LEDC_RESOLUTION, 0, cfg.fade_time_ms);
-
-            ledcFade(LEDC_GPIO, current_duty, pwm_target, fade_ms);
-        }
+    if (abs((int)current_duty - (int)pwm_target) > cfg->pwm_hysteresis) {
+        uint32_t delta = abs((int)pwm_target - (int)current_duty);
+        uint32_t fade_ms = map(delta, 0, LEDC_MAX_DUTY, 0, cfg->fade_time_ms);
+        ledcFade(LEDC_GPIO, current_duty, pwm_target, fade_ms);
     }
 }
 
@@ -42,13 +38,13 @@ void lamp_update(const SensorData& data){
 
 int sqrtFunction(float lux) {
   
-    if (lux >= cfg.max_lux) 
+    if (lux >= cfg->lux_max) 
         return LEDC_MAX_DUTY;
 
     if (lux <= 0.0f)
         return 0;
 
-    int val = (int)(sqrt(lux / cfg.max_lux) * LEDC_MAX_DUTY);
+    int val = (int)(sqrt(lux / cfg->lux_max) * LEDC_MAX_DUTY);
 
     return constrain(val, 0, LEDC_MAX_DUTY);
 }

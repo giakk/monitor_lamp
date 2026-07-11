@@ -1,3 +1,7 @@
+/*
+
+THIS FILE IS THE FIRST PROJECT AND WORKS. IT IS HERE AS A BACKUP IN CASE YOU NEED SOMETHING THAT JUST WORKS
+
 #include "7Semi_VEML7700.h"
 #include "driver/ledc.h"
 #include "MyLD2410.h"
@@ -193,3 +197,5 @@ int sqrtFunction(float lux) {
   // Sicurezza extra
   return constrain(val, 0, max_duty);
 }
+
+*/

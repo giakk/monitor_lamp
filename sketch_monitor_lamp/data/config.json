@@ -1,0 +1,15 @@
+{
+  "wifi_ssid":       "",
+  "wifi_password":   "",
+  "hostname":        "monitor-lamp",
+  "wifi_timeout_ms": 10000,
+
+  "ap_ssid":         "MonitorLamp-AP",
+  "ap_password":     "12345678",
+
+  "lux_max":         400.0,
+  "fade_time_ms":    1000,
+  "pwm_hysteresis":  50,
+
+  "refresh_rate_ms": 100
+}

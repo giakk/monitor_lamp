@@ -1,10 +1,12 @@
+#pragma once
+
 #include "config.h"
 #include "7Semi_VEML7700.h"
 #include "MyLD2410.h"
 #include <Arduino.h>
 
 
-struct sensors_data
+struct SensorData
 {                   
     float lux;
     bool presence;
@@ -16,4 +18,4 @@ struct sensors_data
 
 void sensors_init();
 
-sensors_data sensors_read();
+SensorData sensors_read();

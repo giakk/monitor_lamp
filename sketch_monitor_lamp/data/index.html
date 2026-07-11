@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monitor Lamp</title>
+<style>
+/* ── Reset & base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --amber:        #E8951A;
+  --amber-dim:    #7A4E0D;
+  --amber-glow:   rgba(232, 149, 26, 0.15);
+  --amber-subtle: rgba(232, 149, 26, 0.08);
+
+  --bg:           #0E0E0F;
+  --bg-card:      #161618;
+  --bg-raised:    #1E1E21;
+
+  --border:       rgba(255,255,255,0.07);
+  --border-amber: rgba(232,149,26,0.35);
+
+  --text-primary:   #F0EFEB;
+  --text-secondary: #8A8984;
+  --text-tertiary:  #4A4947;
+
+  --green:  #4CAF50;
+  --red:    #E05555;
+  --radius: 14px;
+  --radius-sm: 8px;
+}
+
+[data-theme="light"] {
+  --bg:           #F4F3F0;
+  --bg-card:      #FFFFFF;
+  --bg-raised:    #ECEAE5;
+
+  --border:       rgba(0,0,0,0.08);
+  --border-amber: rgba(232,149,26,0.45);
+
+  --text-primary:   #1C1B19;
+  --text-secondary: #6B6A65;
+  --text-tertiary:  #A4A29B;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  transition: background .25s, color .25s;
+}
+
+/* ── Layout ── */
+body {
+  display: flex;
+  justify-content: center;
+  padding: 24px 16px 48px;
+}
+
+.app {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 4px 2px 8px;
+}
+.header-title {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  color: var(--text-primary);
+}
+.header-sub {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+  font-variant-numeric: tabular-nums;
+}
+.badge-online {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--green);
+  background: rgba(76,175,80,0.1);
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(76,175,80,0.2);
+}
+.badge-offline { color: var(--red); background: rgba(224,85,85,0.1); border-color: rgba(224,85,85,0.2); }
+.dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 6px currentColor;
+}
+
+.theme-toggle {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all .2s;
+  flex-shrink: 0;
+}
+.theme-toggle:hover { border-color: rgba(255,255,255,0.15); color: var(--text-primary); }
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Card base ── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+/* ── Power card ── */
+.power-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  transition: border-color .2s;
+}
+.power-card.is-on {
+  border-color: var(--border-amber);
+  box-shadow: 0 0 0 1px var(--border-amber), inset 0 0 30px var(--amber-subtle);
+}
+.power-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 500;
+}
+.power-icon {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  transition: all .3s;
+}
+.is-on .power-icon {
+  background: var(--amber-glow);
+  border-color: var(--border-amber);
+  box-shadow: 0 0 12px var(--amber-glow);
+}
+
+/* Toggle switch */
+.toggle {
+  position: relative;
+  width: 50px; height: 28px;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background .25s, border-color .25s;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+}
+.toggle::after {
+  content: '';
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--text-tertiary);
+  transition: transform .25s, background .25s;
+}
+.toggle:checked {
+  background: var(--amber);
+  border-color: var(--amber);
+}
+.toggle:checked::after {
+  transform: translateX(22px);
+  background: #fff;
+}
+
+/* ── Mode selector ── */
+.mode-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 0;
+  background: none;
+  border: none;
+}
+.mode-btn {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  text-align: left;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all .2s;
+}
+.mode-btn:hover { border-color: rgba(255,255,255,0.15); color: var(--text-primary); }
+.mode-btn.active {
+  background: var(--amber-subtle);
+  border-color: var(--border-amber);
+  color: var(--text-primary);
+}
+.mode-name {
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 3px;
+}
+.mode-desc { font-size: 11px; line-height: 1.4; color: var(--text-tertiary); }
+.mode-btn.active .mode-desc { color: var(--text-secondary); }
+
+/* ── Brightness ── */
+.bright-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 14px;
+}
+.bright-label { font-size: 12px; font-weight: 500; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .06em; }
+.bright-val { font-size: 28px; font-weight: 300; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.bright-val span { font-size: 14px; color: var(--text-tertiary); font-weight: 400; }
+
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 20px;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  margin: 0;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%; height: 4px;
+  background: transparent;
+  border-radius: 2px;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 8px var(--amber-glow);
+  cursor: pointer;
+  transition: transform .15s;
+  margin-top: -8px; /* (20 - 4) / 2, centra il pallino sulla linea */
+}
+input[type=range]::-moz-range-track {
+  width: 100%; height: 4px;
+  background: transparent;
+  border-radius: 2px;
+}
+input[type=range]::-moz-range-thumb {
+  width: 20px; height: 20px;
+  border: none;
+  border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 8px var(--amber-glow);
+  cursor: pointer;
+  transition: transform .15s;
+}
+input[type=range]:active::-webkit-slider-thumb { transform: scale(1.15); }
+input[type=range]:active::-moz-range-thumb { transform: scale(1.15); }
+input[type=range]:disabled { opacity: .4; cursor: not-allowed; }
+input[type=range]:disabled::-webkit-slider-thumb { box-shadow: none; }
+input[type=range]:disabled::-moz-range-thumb { box-shadow: none; }
+
+.bright-track {
+  position: relative;
+  height: 20px;
+  margin-bottom: 6px;
+}
+.bright-track-bg {
+  position: absolute;
+  top: 50%; left: 0;
+  transform: translateY(-50%);
+  width: 100%; height: 4px;
+  background: var(--bg-raised);
+  border-radius: 2px;
+  pointer-events: none;
+}
+.bright-fill {
+  position: absolute;
+  top: 50%; left: 0;
+  transform: translateY(-50%);
+  height: 4px;
+  background: linear-gradient(90deg, var(--amber-dim), var(--amber));
+  border-radius: 2px;
+  pointer-events: none;
+  transition: width .1s;
+}
+
+/* ── Sensor cards ── */
+.sensors-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.sensor-card {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.sensor-name {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  display: flex; align-items: center; gap: 5px;
+  text-align: left;
+}
+.sensor-val {
+  font-size: 20px;
+  font-weight: 300;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.sensor-unit { font-size: 12px; color: var(--text-secondary); font-weight: 400; }
+
+.presence-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.presence-dot.present {
+  background: var(--green);
+  box-shadow: 0 0 8px rgba(76,175,80,0.6);
+}
+.presence-dot.absent {
+  background: var(--red);
+  box-shadow: 0 0 8px rgba(224,85,85,0.5);
+}
+
+/* ── Settings panel ── */
+.settings-toggle {
+  width: 100%;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 12px;
+  padding: 8px 14px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: border-color .2s, color .2s;
+}
+.settings-toggle:hover { border-color: rgba(255,255,255,0.15); color: var(--text-primary); }
+
+.settings-panel {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+}
+.settings-panel.open { display: flex; }
+
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field label { font-size: 11px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: .06em; }
+.field input[type=text],
+.field input[type=password],
+.field input[type=number] {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 13px;
+  padding: 8px 12px;
+  outline: none;
+  width: 100%;
+  transition: border-color .2s;
+}
+.field input:focus { border-color: var(--border-amber); }
+
+.fields-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+.btn {
+  background: var(--amber);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: #0E0E0F;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 18px;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+.btn:hover { opacity: .88; }
+.btn-ghost {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+.btn-ghost:hover { color: var(--text-primary); border-color: rgba(255,255,255,0.18); opacity: 1; }
+.btn-row { display: flex; gap: 8px; justify-content: flex-end; }
+
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(12px);
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 18px;
+  font-size: 13px;
+  color: var(--text-primary);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s, transform .25s;
+  white-space: nowrap;
+  z-index: 100;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── Error state ── */
+.sensor-error { color: var(--text-tertiary); font-size: 13px; }
+
+/* ── Divider ── */
+.divider { height: 1px; background: var(--border); margin: 2px 0; }
+
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <div class="header-title">Monitor Lamp</div>
+      <div class="header-sub" id="ip-label">—</div>
+    </div>
+    <div class="header-right">
+      <div class="badge-online" id="status-badge">
+        <div class="dot"></div>
+        <span id="status-text">connecting</span>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Cambia tema">🌙</button>
+    </div>
+  </div>
+
+  <!-- Power -->
+  <div class="card power-card" id="power-card">
+    <div class="power-label">
+      <div class="power-icon" id="power-icon">💡</div>
+      <span id="power-label-text">Lampada</span>
+    </div>
+    <input type="checkbox" class="toggle" id="toggle-power" onchange="sendPower(this.checked)">
+  </div>
+
+  <!-- Mode -->
+  <div class="card mode-grid">
+    <button class="mode-btn active" id="btn-auto" onclick="sendMode('auto')">
+      <div class="mode-name">⚡ Automatica</div>
+      <div class="mode-desc">Lux e presenza adattano la luminosità</div>
+    </button>
+    <button class="mode-btn" id="btn-manual" onclick="sendMode('manual')">
+      <div class="mode-name">🎚 Manuale</div>
+      <div class="mode-desc">Imposta un valore fisso</div>
+    </button>
+  </div>
+
+  <!-- Brightness -->
+  <div class="card">
+    <div class="bright-header">
+      <span class="bright-label">Luminosità</span>
+      <span class="bright-val"><span id="bright-pct">—</span><span> %</span></span>
+    </div>
+    <div class="bright-track">
+      <div class="bright-track-bg"></div>
+      <div class="bright-fill" id="bright-fill" style="width:0%"></div>
+      <input type="range" id="slider-brightness" min="0" max="100" value="0"
+             oninput="onSliderInput(this.value)"
+             onchange="sendBrightness(this.value)"
+             disabled>
+    </div>
+  </div>
+
+  <!-- Sensors -->
+  <div class="sensors-grid">
+    <div class="sensor-card">
+      <div class="sensor-name">☀ Luce</div>
+      <div class="sensor-val">
+        <span id="lux-val">—</span>
+        <span class="sensor-unit" id="lux-unit"> lux </span>
+      </div>
+    </div>
+    <div class="sensor-card">
+      <div class="sensor-name">📡 Presenza</div>
+      <div class="sensor-val"><span class="presence-dot" id="presence-dot"></span></div>
+    </div>
+  </div>
+
+  <!-- Settings toggle -->
+  <button class="settings-toggle" onclick="toggleSettings(this)">
+    <span>⚙ Impostazioni</span>
+    <span id="settings-arrow">▾</span>
+  </button>
+
+  <!-- Settings panel -->
+  <div class="settings-panel" id="settings-panel">
+    <div class="card" style="display:flex; flex-direction:column; gap:12px;">
+
+      <div class="field">
+        <label>WiFi SSID</label>
+        <input type="text" id="cfg-ssid" placeholder="Nome rete">
+      </div>
+      <div class="field">
+        <label>WiFi Password</label>
+        <input type="password" id="cfg-pass" placeholder="••••••••">
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="fields-row">
+        <div class="field">
+          <label>Soglia lux (max)</label>
+          <input type="number" id="cfg-lux-max" min="10" max="10000" step="10">
+        </div>
+        <div class="field">
+          <label>Fade (ms)</label>
+          <input type="number" id="cfg-fade" min="0" max="5000" step="100">
+        </div>
+      </div>
+
+      <div class="fields-row">
+        <div class="field">
+          <label>Isteresi PWM</label>
+          <input type="number" id="cfg-hyst" min="0" max="500" step="10">
+        </div>
+        <div class="field">
+          <label>Refresh (ms)</label>
+          <input type="number" id="cfg-refresh" min="50" max="2000" step="50">
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="loadConfig()">Annulla</button>
+        <button class="btn" onclick="saveConfig()">Salva</button>
+      </div>
+
+      <div class="divider"></div>
+      <div style="display:flex; justify-content:flex-end;">
+        <button class="btn btn-ghost" style="font-size:11px; padding:6px 12px;" onclick="confirmReset()">
+          Ripristina default
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Config ────────────────────────────────────────────────────────────────────
+const POLL_MS = 1500;
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let isOn     = false;
+let mode     = 'auto';
+let sliderDragging = false;
+
+// ── DOM refs ──────────────────────────────────────────────────────────────────
+const $badge    = document.getElementById('status-badge');
+const $statusTx = document.getElementById('status-text');
+const $ipLabel  = document.getElementById('ip-label');
+const $powerCard= document.getElementById('power-card');
+const $powerIcon= document.getElementById('power-icon');
+const $toggle   = document.getElementById('toggle-power');
+const $btnAuto  = document.getElementById('btn-auto');
+const $btnMan   = document.getElementById('btn-manual');
+const $slider   = document.getElementById('slider-brightness');
+const $fill     = document.getElementById('bright-fill');
+const $brightPct= document.getElementById('bright-pct');
+const $luxVal   = document.getElementById('lux-val');
+const $luxUnit  = document.getElementById('lux-unit');
+const $presDot  = document.getElementById('presence-dot');
+const $toast    = document.getElementById('toast');
+const $themeBtn = document.getElementById('theme-toggle');
+
+// ── Polling ───────────────────────────────────────────────────────────────────
+async function poll() {
+  try {
+    const res = await fetch('/api/state');
+    if (!res.ok) throw new Error('http ' + res.status);
+    const d = await res.json();
+    applyState(d);
+    setOnline(true, d.ip);
+  } catch (e) {
+    setOnline(false);
+  }
+}
+
+function applyState(d) {
+  // Power
+  isOn = d.on;
+  $toggle.checked = d.on;
+  $powerCard.classList.toggle('is-on', d.on);
+
+  // Mode
+  mode = d.mode;
+  $btnAuto.classList.toggle('active', d.mode === 'auto');
+  $btnMan.classList.toggle('active',  d.mode === 'manual');
+
+  // Slider: aggiorna solo se l'utente non sta trascinando
+  if (!sliderDragging) {
+    const pct = d.mode === 'manual' ? d.brightness : d.duty_pct;
+    setSlider(pct, d.mode === 'manual');
+  }
+  $slider.disabled = (d.mode === 'auto');
+
+  // Sensori
+  if (d.lux_ok) {
+    $luxVal.textContent  = d.lux < 1000 ? d.lux.toFixed(0) : (d.lux/1000).toFixed(1);
+    $luxUnit.textContent = d.lux < 1000 ? ' lux' : ' klux';
+    $luxVal.classList.remove('sensor-error');
+  } else {
+    $luxVal.textContent = '—';
+    $luxUnit.textContent = '';
+    $luxVal.classList.add('sensor-error');
+  }
+
+  if (d.radar_ok) {
+    const p = d.presence;
+    $presDot.className = 'presence-dot ' + (p ? 'present' : 'absent');
+  } else {
+    $presDot.className = 'presence-dot absent';
+  }
+}
+
+function setOnline(ok, ip) {
+  $badge.className = 'badge-online' + (ok ? '' : ' badge-offline');
+  $statusTx.textContent = ok ? 'online' : 'offline';
+  if (ip) $ipLabel.textContent = ip;
+}
+
+function setSlider(pct, enabled) {
+  $slider.value = pct;
+  $fill.style.width = pct + '%';
+  $brightPct.textContent = pct;
+  $slider.disabled = !enabled;
+}
+
+// ── Slider interaction ────────────────────────────────────────────────────────
+function onSliderInput(val) {
+  sliderDragging = true;
+  $fill.style.width = val + '%';
+  $brightPct.textContent = val;
+}
+
+async function sendBrightness(val) {
+  sliderDragging = false;
+  await postControl({ brightness: parseInt(val) });
+}
+
+// ── Controls ──────────────────────────────────────────────────────────────────
+async function sendPower(on) {
+  await postControl({ on });
+}
+
+async function sendMode(m) {
+  await postControl({ mode: m });
+}
+
+async function postControl(body) {
+  try {
+    const res = await fetch('/api/control', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) throw new Error('http ' + res.status);
+    const d = await res.json();
+    applyState(d);
+  } catch (e) {
+    showToast('Errore di comunicazione');
+  }
+}
+
+// ── Settings ──────────────────────────────────────────────────────────────────
+function toggleSettings(btn) {
+  const panel = document.getElementById('settings-panel');
+  const arrow = document.getElementById('settings-arrow');
+  const open  = panel.classList.toggle('open');
+  arrow.textContent = open ? '▴' : '▾';
+  if (open) loadConfig();
+}
+
+async function loadConfig() {
+  try {
+    const res = await fetch('/api/config');
+    const cfg = await res.json();
+    document.getElementById('cfg-ssid').value    = cfg.wifi_ssid    ?? '';
+    document.getElementById('cfg-pass').value    = '';          // non pre-popolare password
+    document.getElementById('cfg-lux-max').value = cfg.lux_max     ?? 400;
+    document.getElementById('cfg-fade').value    = cfg.fade_time_ms ?? 1000;
+    document.getElementById('cfg-hyst').value    = cfg.pwm_hysteresis ?? 50;
+    document.getElementById('cfg-refresh').value = cfg.refresh_rate_ms ?? 100;
+  } catch (e) {
+    showToast('Impossibile caricare impostazioni');
+  }
+}
+
+async function saveConfig() {
+  const body = {
+    lux_max:         parseFloat(document.getElementById('cfg-lux-max').value),
+    fade_time_ms:    parseInt(document.getElementById('cfg-fade').value),
+    pwm_hysteresis:  parseInt(document.getElementById('cfg-hyst').value),
+    refresh_rate_ms: parseInt(document.getElementById('cfg-refresh').value),
+  };
+  const ssid = document.getElementById('cfg-ssid').value.trim();
+  const pass  = document.getElementById('cfg-pass').value;
+  if (ssid) body.wifi_ssid = ssid;
+  if (pass) body.wifi_password = pass;
+
+  try {
+    const res = await fetch('/api/config', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) throw new Error();
+    showToast('Impostazioni salvate ✓');
+    if (ssid || pass) showToast('Riavvia il dispositivo per il nuovo WiFi');
+  } catch {
+    showToast('Salvataggio fallito');
+  }
+}
+
+async function confirmReset() {
+  if (!confirm('Ripristinare tutti i valori di default?')) return;
+  try {
+    await fetch('/api/config/reset', { method: 'POST' });
+    showToast('Default ripristinati ✓');
+    loadConfig();
+  } catch {
+    showToast('Errore durante il reset');
+  }
+}
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  $toast.textContent = msg;
+  $toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => $toast.classList.remove('show'), 2800);
+}
+
+// ── Tema chiaro/scuro ─────────────────────────────────────────────────────────
+function applyTheme(theme) {
+  if (theme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+    $themeBtn.textContent = '☀';
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+    $themeBtn.textContent = '🌙';
+  }
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+  const next = current === 'light' ? 'dark' : 'light';
+  applyTheme(next);
+  try { localStorage.setItem('monitor-lamp-theme', next); } catch (e) {}
+}
+
+(function initTheme() {
+  let saved = 'dark';
+  try { saved = localStorage.getItem('monitor-lamp-theme') || 'dark'; } catch (e) {}
+  applyTheme(saved);
+})();
+
+// ── Start ─────────────────────────────────────────────────────────────────────
+poll();
+setInterval(poll, POLL_MS);
+</script>
+</body>
+</html>
